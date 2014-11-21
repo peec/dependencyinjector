@@ -1,0 +1,21 @@
+{
+    "name": "pkj/dic",
+    "type": "library",
+    "description": "Dependency Injection Container.",
+    "homepage": "http://github.com/peec/dependencyinjector",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Petter Kjelkenes",
+            "email": "kjelkenes@gmail.com",
+            "homepage": "http://pkj.no",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"Pkj\\DependencyInjector": "src/"}
+    },
+    "require": {
+        "php": ">=5.4.0"
+    }
+}

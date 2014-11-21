@@ -1,6 +1,6 @@
 # PHP - Dependency Injection Container
 
-Simple.
+Simple dependency injection container (DIC) or otherwise known as Inversion of Control (IoC).
 
 
 ```php
