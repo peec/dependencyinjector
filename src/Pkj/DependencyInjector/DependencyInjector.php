@@ -30,16 +30,48 @@ namespace Pkj\DependencyInjector;
  * @author Petter Kjelkenes <kjelkenes@gmail.com>
  */
 class DependencyInjector {
+
     private $services;
     private $build;
+    private $config = array();
+
+    const CONF_STATIC_ANALYSIS = 1;
+
+
 
     public function __construct () {
         $this->services = [];
         $this->build = [];
+        $this->config = [
+            self::CONF_STATIC_ANALYSIS => false
+        ];
+    }
+
+    public function config($key, $value = null) {
+        if ($value === null) {
+            return $this->config[$key];
+        } else {
+            $this->config[$key] = $value;
+        }
     }
 
     private function set($service, callable $callee, array $arguments = []) {
+        if ($this->config(self::CONF_STATIC_ANALYSIS)) {
+            if (!$arguments) {
+                $arguments = $this->buildCallableArguments($callee);
+            }
+        }
         $this->services[$service] = [$callee, $arguments];
+    }
+
+
+    private function buildCallableArguments (callable $callee) {
+        $args = array();
+        $ref = new \ReflectionFunction($callee);
+        foreach ($ref->getParameters() as $param) {
+            $args[] = '@'.$param->getName();
+        }
+        return $args;
     }
 
     private function isBuilt($service) {
@@ -80,4 +112,5 @@ class DependencyInjector {
             return $this->build[$service];
         }
     }
+
 }
